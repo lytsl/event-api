@@ -50,9 +50,7 @@ export default (app: Router) => {
 
       try {
         const input = req.body as EventInputDTO
-        const id = new ObjectId().toString()
-        logger.debug(id)
-        const uid = await EventService.AddEvent({ ...input, uid: id }, req.file)
+        const uid = await EventService.AddEvent(input, req.file)
         return res.status(201).json(JSend.success({ uid: uid }))
       } catch (e) {
         logger.error('🔥 error: %o', e)
@@ -77,7 +75,7 @@ export default (app: Router) => {
 
       try {
         const input = req.body as EventInputDTO
-        const uid = await EventService.AddEvent({ ...input, uid: req.params.id }, req.file)
+        const uid = await EventService.UpdateEvent(input, req.params.id, req.file)
         return res.status(201).json(JSend.success({ uid: uid }))
       } catch (e) {
         logger.error('🔥 error: %o', e)

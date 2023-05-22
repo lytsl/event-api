@@ -7,7 +7,7 @@ const Joigoose = require('joigoose')(Mongoose, null, {
 
 export const joiEventSchema = Joi.object({
   uid: Joi.string().meta({
-    _mongoose: { type: 'ObjectId', unique: true, index: true },
+    _mongoose: { type: 'ObjectId', unique: true, index: true, auto: true },
   }),
   name: Joi.string().max(20).required(),
   tagline: Joi.string().max(20).required(),

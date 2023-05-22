@@ -39,6 +39,22 @@ export default {
     }
   },
 
+  UpdateEvent: async (eventDTO: EventInputDTO, id: string, file): Promise<string> => {
+    try {
+      const uploadResult = await cloudinary.uploader.upload(file.path)
+      if (uploadResult.secure_url) {
+        const document = await EventModel.updateOne({ uid: id }, eventDTO)
+        // const document = await EventModel.create({ ...eventDTO, files: uploadResult.secure_url })
+        return id
+      } else {
+        throw new Error('Failed to upload file to Cloudinary')
+      }
+    } catch (error) {
+      logger.error(error)
+      throw error
+    }
+  },
+
   DeleteEvent: async (id: string): Promise<boolean> => {
     const result = await EventModel.deleteOne({ uid: id })
 
